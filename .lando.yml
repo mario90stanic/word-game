@@ -1,0 +1,9 @@
+name: word-game
+recipe: lamp
+config:
+  webroot: public
+services:
+  phpmyadmin:
+    type: phpmyadmin
+    hosts:
+      - database
