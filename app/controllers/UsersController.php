@@ -53,7 +53,7 @@ class UsersController
 
         return $this->user->create($this->data);
 
-        redirect('');
+       // redirect('');
     }
 
     public function logout()
