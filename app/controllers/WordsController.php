@@ -1,21 +1,29 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\App;
-use App\Helpers\EnglishDictionary;
 use App\Helpers\WordValidation;
-use App\Models\User;
+use App\Interfaces\PlayerInterface;
 use App\Models\Word;
 use Exception;
 
 class WordsController
 {
-    private $word;
+    private mixed $word;
+    private PlayerInterface $user;
+    private Word $wordObj;
+    private WordValidation $wordValidation;
 
-    public function __construct()
+    public function __construct(
+        PlayerInterface $user,
+        Word $wordObj,
+        WordValidation $wordValidation
+    )
     {
         $this->word = $_POST['word'];
+        $this->user = $user;
+        $this->wordObj = $wordObj;
+        $this->wordValidation = $wordValidation;
     }
 
     /**
@@ -24,13 +32,11 @@ class WordsController
     public function store()
     {
         try {
-            $word = new Word(App::get('config'), App::get('database'), $this->word);
-            $validator = new WordValidation(new EnglishDictionary, $this->word, App::get('database'));
-            $validator->validate($word);
+            $this->wordValidation->validate($this->word, $_SESSION['user']['id']);
+            $this->wordObj->insert($this->word);
+            $_SESSION['user']['points'] = $this->user->getPlayersPoints($_SESSION['user']['id']);
+            $_SESSION['user']['daily_word'] = true;
 
-            $word->insert();
-
-            $_SESSION['user']['points'] = (new User)->getUserPoints($_SESSION['user']['id']);
             redirect('');
         } catch (Exception $e) {
             echo $e->getMessage();

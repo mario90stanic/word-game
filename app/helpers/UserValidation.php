@@ -1,14 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\app\helpers;
+namespace App\Helpers;
 
-use App\Models\User;
+use App\Interfaces\PlayerInterface;
+use Exception;
 
 class UserValidation
 {
-    private $data;
-    private $user;
-    private $required = [
+    private array $data;
+    private PlayerInterface $user;
+    private array $missing = [];
+    private array $oldValues = [];
+    private array $required = [
         'first_name',
         'last_name',
         'email',
@@ -19,13 +22,17 @@ class UserValidation
     /**
      * @param $data
      */
-    public function __construct($data)
+    public function __construct(PlayerInterface $user)
     {
-        $this->user = new User();
-        $this->data = $data;
+        $this->user = $user;
+        $this->data = $_POST;
     }
 
-    public function validate()
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function validate(): bool
     {
         $fields = $this->requiredFields();
 
@@ -52,6 +59,8 @@ class UserValidation
             $_SESSION['old_values'] = $fields['old_values'];
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -59,27 +68,20 @@ class UserValidation
      */
     private function requiredFields(): array
     {
-        $missing = [];
-        $oldValues = [];
-
         foreach ($this->required as $item) {
-            if ($this->data[$item] == '') {
-                $missing[] = ucfirst(str_replace('_', ' ', $item));
-            } elseif ($item != 'password' && $item != 'repeat_password') {
-                $oldValues[$item] = $this->data[$item];
-            }
+            $this->checkValidateData($item);
         }
 
         return [
-            'missing' => $missing,
-            'old_values' => $oldValues
+            'missing' => $this->missing,
+            'old_values' => $this->oldValues
         ];
     }
 
     /**
-     * @return false|void
+     * @return bool
      */
-    private function isEmailFormat()
+    private function isEmailFormat(): bool
     {
         if (filter_var($this->data['email'], FILTER_VALIDATE_EMAIL)) {
             return true;
@@ -90,7 +92,7 @@ class UserValidation
 
     /**
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     private function isUniqueEmail(): bool
     {
@@ -111,5 +113,14 @@ class UserValidation
         }
 
         return true;
+    }
+
+    private function checkValidateData($item)
+    {
+        if ($this->data[$item] == '') {
+            $this->missing[] = ucfirst(str_replace('_', ' ', $item));
+        } elseif ($item != 'password' && $item != 'repeat_password') {
+            $this->oldValues[$item] = $this->data[$item];
+        }
     }
 }

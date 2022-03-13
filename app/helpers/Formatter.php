@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Helpers;
 
 use App\Core\App;
+use Exception;
 
 class Formatter
 {
@@ -10,7 +11,7 @@ class Formatter
      * @param $status
      * @return string
      */
-    public static function formatPalindromeStatus($status) :string
+    public static function formatPalindromeStatus($status): string
     {
         switch ($status) {
             case 1:

@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\Core\App;
 use App\Models\Word;
 use PHPUnit\Framework\TestCase;
 
@@ -8,17 +9,21 @@ final class WordsTest extends TestCase
     /**
      * @test
      * @dataProvider words
+     * @throws Exception
      */
     public function checkPointsCount($word, $points)
     {
-        $config = [
+        $app = new App;
+
+        $app::bind('config', [
             'palindrome_points' => 3,
             'almost_palindrome_points' => 2,
-        ];
+        ]);
 
+        $app::bind('database', []);
 
-        $wordObj = new Word($config, null, $word);
-        $calculatedPoints = $this->callMethod($wordObj, 'calculatePoints');
+        $wordObj = new Word($app);
+        $calculatedPoints = $this->callMethod($wordObj, 'calculatePoints', [$word]);
 
         $this->assertEquals($points, $calculatedPoints['total']);
     }
@@ -26,10 +31,10 @@ final class WordsTest extends TestCase
     public function words()
     {
         return [
-           ['test', 5],
-           ['wow', 5],
-           ['coin', 4],
-           ['book', 3],
+           ['test', 5], // almost palindrome
+           ['wow', 5], // palindrome
+           ['coin', 4], // regular
+           ['book', 3], // regular
         ];
     }
 

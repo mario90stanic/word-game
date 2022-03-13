@@ -7,11 +7,16 @@ require 'partials/header.php';
 <form class="p-3" action="/word" method="POST">
     <div class="form-group">
         <label for="word">Enter a word</label>
-        <input type="text" class="form-control word" id="word" name="word" placeholder="Your word">
+        <input type="text" class="form-control word" id="word" name="word" placeholder="Your word of a day">
     </div>
-    <button class="btn btn-primary" type="submit">submit</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 <?php
+//if ($_SESSION['user']['daily_word']) : ?>
+<!--    <div class="alert alert-primary" role="alert">-->
+<!--        You have already entered the word for today.-->
+<!--    </div>-->
+<?php //endif;
 if (!empty($words)) : ?>
     <table class="table p-3">
         <tr>

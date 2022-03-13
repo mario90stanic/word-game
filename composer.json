@@ -5,9 +5,18 @@
     ]
   },
   "require": {
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "psr/container": "^2.0",
+    "ext-pdo": "*",
+    "php": "^8.0",
+    "ext-dom": "*",
+    "ext-json": "*",
+    "ext-libxml": "*",
+    "ext-mbstring": "*",
+    "ext-xml": "*",
+    "ext-xmlwriter": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5"
+    "phpunit/phpunit": "^9.5.18"
   }
 }

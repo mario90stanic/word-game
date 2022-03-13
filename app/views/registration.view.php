@@ -53,7 +53,8 @@
                                     </div>
 
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                                        <button type="submit" class="btn btn-primary btn-lg button-margin">Register</button>
+                                        <a href="/login" class="btn btn-primary btn-lg button-margin">Login</a>
                                     </div>
 
                                 </form>

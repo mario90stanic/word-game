@@ -1,5 +1,7 @@
 <?php
 
+use App\Core\App;
+
 $router->get('', 'PageController@index', ['auth' => true]);
 $router->post('word', 'WordsController@store', ['auth' => true]);
 $router->get('registration', 'UsersController@register');

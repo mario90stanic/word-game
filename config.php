@@ -19,7 +19,6 @@ return [
 //            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 //        ]
 //    ],
-    'site_url' => 'http://'.$_SERVER['HTTP_HOST'],
     'palindrome_points' => 3,
     'almost_palindrome_points' => 2,
     'date_format' => 'm/d/Y',

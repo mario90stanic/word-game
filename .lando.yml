@@ -1,6 +1,7 @@
 name: word-game
 recipe: lamp
 config:
+  php: "8.0"
   webroot: public
 services:
   phpmyadmin:

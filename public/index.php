@@ -3,11 +3,12 @@
 require "../vendor/autoload.php";
 require '../core/bootstrap.php';
 
+use App\Container\Container;
 use App\Core\Router;
 use App\Core\Request;
 
-
-$router = new Router();
+$container = new Container();
+$router = new Router($container);
 
 require '../app/routes.php';
 

@@ -23,7 +23,7 @@ try {
  * @param $data
  * @return mixed
  */
-function view($path, $data = [])
+function view($path, $data = []): mixed
 {
     extract($data);
 
@@ -53,7 +53,7 @@ function redirect($path)
 /**
  * @return false|mixed
  */
-function authCheck()
+function authCheck(): mixed
 {
     if (isset($_SESSION['user'])) {
         return $_SESSION['user'];
@@ -75,6 +75,10 @@ function old($value)
     return '';
 }
 
+/**
+ * @param $value
+ * @return void
+ */
 function dd($value)
 {
     echo "<pre>";
