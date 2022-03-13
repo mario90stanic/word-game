@@ -1,41 +1,54 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Helpers;
 
 use App\Core\App;
-use App\interfaces\Dictionary;
+use App\Interfaces\DictionaryInterface;
 use App\Models\Word;
+use Exception;
 
 class WordValidation
 {
-    private $word;
-    private $dictionary;
-    private $database;
+    private DictionaryInterface $dictionary;
+    private Word $wordObj;
+    private mixed $database;
 
     /**
-     * @param Dictionary $dictionary
-     * @param $word
+     * @param DictionaryInterface $dictionary
+     * @param Word $wordObj
+     * @param App $app
+     * @throws Exception
      */
-    public function __construct(Dictionary $dictionary, $word, $database)
+    public function __construct(DictionaryInterface $dictionary, Word $wordObj, App $app)
     {
-        $this->word = $word;
         $this->dictionary = $dictionary;
-        $this->database = $database;
+        $this->wordObj = $wordObj;
+        $this->database = $app::get('database');
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function validate(Word $word)
+    public function validate(string $word, int $userID): array
     {
+       if ($this->checkDailyEnteredWord($userID)) {
+           $_SESSION['message'] = 'You have already entered the word for a day.';
+           redirect('');
+       }
+
+        if ($word === '') {
+            $_SESSION['message'] = 'You need to enter a word.';
+            redirect('');
+        }
+
         if (!$this->checkDictionary($word)) {
-            $_SESSION['message'] = 'The word is not in the dictionary';
-            return redirect('');
+            $_SESSION['message'] = 'The word is not in the dictionary.';
+            redirect('');
         }
 
         if (!$this->isUniqueWord($word)) {
             $_SESSION['message'] ='You already used this word.';
-            return redirect('');
+            redirect('');
         }
 
         return [
@@ -45,20 +58,37 @@ class WordValidation
     }
 
     /**
-     * @return mixed
+     * @param int $userID
+     * @return bool
      */
-    private function checkDictionary()
+    public function checkDailyEnteredWord(int $userID): bool
     {
-        return $this->dictionary->checkTheWord($this->word);
+        $sql = [
+            'sql' => 'SELECT * FROM words WHERE user_id = :userID AND created_at >= NOW() - INTERVAL 1 DAY ORDER BY created_at DESC LIMIT 1',
+            'params' => [
+                'userID' => $userID
+            ]
+        ];
+
+        return (bool) $this->database->get($sql);
     }
 
     /**
-     * @return bool
-     * @throws \Exception
+     * @param string $word
+     * @return mixed
      */
-    private function isUniqueWord(Word $word)
+    private function checkDictionary(string $word): mixed
     {
-        if (!$word->getWord()) {
+        return $this->dictionary->checkTheWord($word);
+    }
+
+    /**
+     * @param $word
+     * @return bool
+     */
+    private function isUniqueWord($word): bool
+    {
+        if (!$this->wordObj->getWord($word)) {
             return true;
         }
 

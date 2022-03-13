@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Feb 28, 2022 at 10:08 PM
+-- Generation Time: Mar 13, 2022 at 03:27 PM
 -- Server version: 5.7.29
 -- PHP Version: 7.4.11
 
@@ -41,8 +41,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `created_at`) VALUES
-(18, 'Mario', 'Stanic', 'mario90stanic@gmail.com', '$2y$10$HXsib62OcaHXl7RdD1QS2u6rnHMXoMg7LLT9bdIFPUkQ9hcp1AlIm', '2022-02-25 22:23:59'),
-(19, 'teri', 'Stanic', 'mario990stanic@gmail.com', '$2y$10$LGSPXdLfK902baFfESc5Hut.jQHEBIUUj9..TTTtSOJfMlHsqVPDC', '2022-02-28 22:02:56');
+(1, 'Mario', 'Stanic', 'mario90stanic@gmail.com', '$2y$10$HXsib62OcaHXl7RdD1QS2u6rnHMXoMg7LLT9bdIFPUkQ9hcp1AlIm', '2022-02-25 22:23:59');
 
 -- --------------------------------------------------------
 
@@ -64,20 +63,7 @@ CREATE TABLE `words` (
 --
 
 INSERT INTO `words` (`id`, `word`, `user_id`, `points`, `is_palindrome`, `created_at`) VALUES
-(33, 'coin', 18, 4, 0, '2022-02-25 19:15:11'),
-(34, 'wow', 18, 5, 1, '2022-02-25 20:35:29'),
-(35, 'coin', 18, 4, 0, '2022-02-25 20:56:44'),
-(36, 'chair', 1, 5, 0, '2022-02-27 12:51:28'),
-(37, 'glass', 1, 4, 0, '2022-02-28 11:51:22'),
-(38, 'book', 1, 3, 0, '2022-02-28 13:14:32'),
-(39, 'watch', 1, 5, 0, '2022-02-28 13:14:51'),
-(40, 'test', 1, 5, 2, '2022-02-28 13:21:37'),
-(41, 'tennis', 1, 5, 0, '2022-02-28 15:04:38'),
-(42, 'bottle', 1, 5, 0, '2022-02-28 16:24:26'),
-(43, 'bottle', 1, 5, 0, '2022-02-28 16:27:45'),
-(44, 'bottle', 18, 5, 0, '2022-02-28 16:28:00'),
-(45, 'house', 18, 5, 0, '2022-02-28 20:57:15'),
-(46, 'wow', 19, 5, 1, '2022-02-28 22:03:19');
+(82, 'wow', 1, 5, 1, '2022-03-13 15:26:36');
 
 --
 -- Indexes for dumped tables
@@ -103,13 +89,13 @@ ALTER TABLE `words`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `words`
 --
 ALTER TABLE `words`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

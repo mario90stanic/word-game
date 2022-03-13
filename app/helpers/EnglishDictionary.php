@@ -1,14 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Helpers;
 
-use App\Interfaces\Dictionary;
+use App\Interfaces\DictionaryInterface;
 
-class EnglishDictionary implements Dictionary
+class EnglishDictionary implements DictionaryInterface
 {
-    private $endPoint = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+    private string $endPoint = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
-    public static function checkTheWord($word): bool
+    public static function checkTheWord(string $word): bool
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, (new self)->endPoint . $word);

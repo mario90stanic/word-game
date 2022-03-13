@@ -30,7 +30,8 @@
                                     </div>
 
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                                        <button type="submit" class="btn btn-primary btn-lg button-margin">Login</button>
+                                        <a href="/registration" class="btn btn-primary btn-lg button-margin">Registration</a>
                                     </div>
 
                                 </form>

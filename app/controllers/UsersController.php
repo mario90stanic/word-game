@@ -1,25 +1,27 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
 use App\app\helpers\UserValidation;
-use App\Models\User;
+use App\Interfaces\PlayerInterface;
 
 class UsersController
 {
-    private $validator;
-    private $data;
+    private UserValidation $validator;
+    private PlayerInterface $user;
+    private array $data;
 
-    public function __construct()
+    public function __construct(UserValidation $validator, PlayerInterface $user)
     {
-        $this->validator = new UserValidation($_POST);
+        $this->validator = $validator;
         $this->data = $_POST;
+        $this->user = $user;
     }
 
     /**
      * @return mixed
      */
-    public function register()
+    public function register(): mixed
     {
         return view('registration');
     }
@@ -29,9 +31,12 @@ class UsersController
         return view('login');
     }
 
-    public function login()
+    /**
+     * @return mixed
+     */
+    public function login(): mixed
     {
-        (new User)->getUser($_POST);
+        $this->user->getUser($this->data);
 
         return view('login');
     }
@@ -46,9 +51,9 @@ class UsersController
             redirect('registration');
         }
 
-        User::create($this->data);
+        return $this->user->create($this->data);
 
-        redirect('');
+       // redirect('');
     }
 
     public function logout()
