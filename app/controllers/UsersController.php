@@ -51,9 +51,9 @@ class UsersController
             redirect('registration');
         }
 
-        return $this->user->create($this->data);
+        $this->user->create($this->data);
 
-       // redirect('');
+        redirect('');
     }
 
     public function logout()
